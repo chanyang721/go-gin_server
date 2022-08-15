@@ -14,9 +14,12 @@ func main() {
         "message": "pong",
       })
     })
-    r.Run()
-  }
 
+    r.POST("/pong", func(c *gin.Context) {
+      c.JSON(http.StatusOK, gin.H{
+        "name": "ping",
+      })
+    })
 
-// # run example.go and visit 0.0.0.0:8080/ping (for windows "localhost:8080/ping") on browser
-// $ go run example.go
+    r.Run(":3000")
+}
