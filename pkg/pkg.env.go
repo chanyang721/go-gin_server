@@ -1,0 +1,20 @@
+package pkg
+
+import (
+	"os"
+	"path/filepath"
+)
+
+
+func Env(key string) string {
+	env := make(chan string, 1);
+
+	if os.Getenv("GO_ENV") != "production" {
+		godotenv.Load(filepath.Join(".env"))
+		env <- os.Getenv(key)
+	} else {
+		env <- os.Getenv(key)
+	}
+
+	return <-env
+}
