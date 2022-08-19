@@ -3,12 +3,13 @@ package main
 import (
 	"context"
 	"example/web-service-gin/pkg"
+	"example/web-service-gin/routers"
+	"log"
 	"time"
 
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -20,15 +21,16 @@ func main() {
 
 	SetupDatabase(pkg.Env("MONGO_DB_URL"))
 
-	SetupMiddlewares(app)
+	SetupDefaultMiddleware(app)
 
 	SetupRouters(app)
 
-	logrus.Fatal(app.Run(":" + pkg.Env("GO_PORT")))
+	app.Run(":" + pkg.Env("GO_PORT"))
+	log.Fatal("app run")
 }
 
 func SetupMode(env string) {
-	if env != "production" && env != "test" {
+	if env == "development" {
 		gin.SetMode(gin.DebugMode)
 	} else if env == "test" {
 		gin.SetMode(gin.TestMode)
@@ -41,7 +43,7 @@ func SetupDatabase(url string) *mongo.Client {
 	client, err := mongo.NewClient(options.Client().ApplyURI(url))
 
 	if err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -49,7 +51,7 @@ func SetupDatabase(url string) *mongo.Client {
 	err = client.Connect(ctx)
 
 	if err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 
 	println("Successfully Database Connected")
@@ -59,7 +61,7 @@ func SetupDatabase(url string) *mongo.Client {
 	return client
 }
 
-func SetupMiddlewares(app *gin.Engine) *gin.Engine {
+func SetupDefaultMiddleware(app *gin.Engine) *gin.Engine {
 
 	// CORS 옵션 //
 	app.Use(cors.New(cors.Config{
@@ -72,12 +74,15 @@ func SetupMiddlewares(app *gin.Engine) *gin.Engine {
 	// Helmet 옵션 //
 	app.Use(helmet.Default())
 
-	// file compresstion //
+	// file compression //
 
 	return app
 }
 
 func SetupRouters(app *gin.Engine) *gin.Engine {
+	versionRouter := app.Group("/api" + pkg.Env("APP_VERSION"))
+
+	routers.GlobalRouter(versionRouter)
 
 	return app
 }
