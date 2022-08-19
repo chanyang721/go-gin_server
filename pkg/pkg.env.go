@@ -3,11 +3,12 @@ package pkg
 import (
 	"os"
 	"path/filepath"
+
+	"github.com/joho/godotenv"
 )
 
-
 func Env(key string) string {
-	env := make(chan string, 1);
+	env := make(chan string, 1)
 
 	if os.Getenv("GO_ENV") != "production" {
 		godotenv.Load(filepath.Join(".env"))
