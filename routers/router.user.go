@@ -7,11 +7,11 @@ import (
 )
 
 func UserRouters(versionRouter *gin.RouterGroup) {
-	userRouters := versionRouter.Group("/users").Use(middlewares.Auth())
+	userRouter := versionRouter.Group("/users").Use(middlewares.Auth())
 	{
-		userRouters.GET("/:id")
-		userRouters.POST("/")
-		userRouters.PUT("/:id")
-		userRouters.DELETE("/:id")
+		userRouter.GET("/:id")
+		userRouter.POST("/")
+		userRouter.PUT("/:id")
+		userRouter.DELETE("/:id")
 	}
 }

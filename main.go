@@ -26,7 +26,6 @@ func main() {
 	SetupRouters(app)
 
 	app.Run(":" + pkg.Env("GO_PORT"))
-	log.Fatal("app run")
 }
 
 func SetupMode(env string) {
@@ -39,8 +38,8 @@ func SetupMode(env string) {
 	}
 }
 
-func SetupDatabase(url string) *mongo.Client {
-	client, err := mongo.NewClient(options.Client().ApplyURI(url))
+func SetupDatabase(mongoDbUrl string) *mongo.Client {
+	client, err := mongo.NewClient(options.Client().ApplyURI(mongoDbUrl))
 
 	if err != nil {
 		log.Fatal(err)
@@ -80,7 +79,7 @@ func SetupDefaultMiddleware(app *gin.Engine) *gin.Engine {
 }
 
 func SetupRouters(app *gin.Engine) *gin.Engine {
-	versionRouter := app.Group("/api" + pkg.Env("APP_VERSION"))
+	versionRouter := app.Group(pkg.Env("APP_VERSION"))
 
 	routers.GlobalRouter(versionRouter)
 
