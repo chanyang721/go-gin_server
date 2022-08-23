@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func DatabaseConnection(mongoDbUrl string) *mongo.Client {
+func MongoDatabaseConnection(mongoDbUrl string) *mongo.Client {
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoDbUrl))
 	if err != nil {
 		log.Fatal(err)
@@ -34,4 +35,14 @@ func DatabaseConnection(mongoDbUrl string) *mongo.Client {
 	defer client.Disconnect(ctx)
 
 	return client
+}
+
+func PostgresDatabaseConnection(pgUrl string) *sql.DB {
+	pgBb, err := sql.Open("postgres", pgUrl)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return pgBb
 }
