@@ -15,4 +15,6 @@ func SetupRouters(app *gin.Engine) {
 func GlobalRouter(versionRouter *gin.RouterGroup) {
 	UserRouters(versionRouter)
 	AuthRouters(versionRouter)
+	GiftRouters(versionRouter)
+	StoreRouters(versionRouter)
 }
