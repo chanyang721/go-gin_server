@@ -1,4 +1,4 @@
-module example/web-service-gin
+module ts-s
 
 go 1.19
 

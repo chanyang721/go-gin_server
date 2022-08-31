@@ -1,27 +1,27 @@
 package main
 
 import (
-	"example/web-service-gin/config/database"
-	"example/web-service-gin/config/mode"
-	"example/web-service-gin/middlewares"
-	"example/web-service-gin/pkg"
-	"example/web-service-gin/routers"
+	"ts-s/cf/mo"
+	"ts-s/d"
+	"ts-s/m"
+	"ts-s/p/e"
+	"ts-s/r"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	app := gin.Default()
+	a := gin.Default()
 
-	mode.SetupMode(pkg.Env("GO_ENV"))
+	mo.StpM(e.G("GO_ENV"))
 
-	database.SetupMongoDatabase(pkg.Env("MONGO_DB_URL"))
+	d.StpMgD(e.G("MONGO_DB_URL"))
 
-	database.SetupPostgresDatabase(pkg.Env("POSTGRESQL_DB_URL"))
+	// d.SetupPostgresDatabase(pkg.Env("POSTGRESQL_DB_URL"))
 
-	middlewares.SetupDefaultMiddleware(app)
+	m.StpM(a)
 
-	routers.SetupRouters(app)
+	r.SR(a)
 
-	app.Run(":" + pkg.Env("GO_PORT"))
+	a.Run(":" + e.G("GO_PORT"))
 }
