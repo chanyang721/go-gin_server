@@ -31,7 +31,7 @@ func MgDCn(mgDUl string) *mongo.Client {
 
 	println("Successfully Database Connected")
 
-	defer client.Disconnect(ctx)
+	// defer client.Disconnect(ctx)
 
 	return client
 }

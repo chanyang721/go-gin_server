@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ts-s/cf/mo"
+	"ts-s/cf/md"
 	"ts-s/d"
 	"ts-s/m"
 	"ts-s/p/e"
@@ -13,15 +13,15 @@ import (
 func main() {
 	a := gin.Default()
 
-	mo.StpM(e.G("GO_ENV"))
+	md.StpMd(e.G("GO_ENV"))
 
 	d.StpMgD(e.G("MONGO_DB_URL"))
 
-	// d.SetupPostgresDatabase(pkg.Env("POSTGRESQL_DB_URL"))
+	// d.StpPgD(e.G("POSTGRESQL_DB_URL"))
 
 	m.StpM(a)
 
-	r.SR(a)
+	r.StpR(a)
 
 	a.Run(":" + e.G("GO_PORT"))
 }

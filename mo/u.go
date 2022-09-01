@@ -3,7 +3,7 @@ package mo
 import (
 	"time"
 
-	"go.mongodb.org/mongo-driver/internal/uuid"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UE string // 유저 유형
@@ -15,11 +15,11 @@ const (
 )
 
 type U struct {
-	id        uuid.UUID
-	passId    string
-	email     string
-	userType  UE
-	createdAt time.Time
-	updatedAt time.Time
-	deletedAt time.Time
+	Id        primitive.ObjectID
+	PassId    string
+	Email     string
+	UserType  UE
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 }

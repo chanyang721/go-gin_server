@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/shopspring/decimal"
-	"go.mongodb.org/mongo-driver/internal/uuid"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type SE string // 상점 유형
@@ -19,20 +19,20 @@ const (
 const ()
 
 type S struct {
-	id             uuid.UUID
-	userId         uuid.UUID
-	name           string
-	phone          string
-	storeType      SE
-	category       SC
-	platformType   PE
-	shopName       string
-	shopAddress    string
-	businessNumber string
-	latitude       decimal.Decimal
-	longitude      decimal.Decimal
-	radius         int
-	createdAt      time.Time
-	updatedAt      time.Time
-	deletedAt      time.Time
+	Id             primitive.ObjectID
+	UserId         primitive.ObjectID
+	Name           string
+	Phone          string
+	StoreType      SE
+	Category       SC
+	PlatformType   PE
+	ShopName       string
+	ShopAddress    string
+	BusinessNumber string
+	Latitude       decimal.Decimal
+	Longitude      decimal.Decimal
+	Radius         int
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      time.Time
 }

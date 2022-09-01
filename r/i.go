@@ -6,7 +6,7 @@ import (
 
 func StpR(a *gin.Engine) {
 	UR(a)
-	AR(a)
 	GR(a)
+	GsR(a)
 	SR(a)
 }
