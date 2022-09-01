@@ -1,18 +1,20 @@
 package d
 
 import (
+	"ts-s/d/cn"
+
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func StpMgD(mgDUl string) *mongo.Database {
-	c := MgDCn(mgDUl)
-	d := CMgD(c)
+	c := cn.MgDCn(mgDUl)
+	d := cn.CMgD(c)
 
 	return d
 }
 
-// func SetupPostgresDatabase(postgresUrl string) *sql.DB {
-// 	pgDb := CreatePostgresDatabase(postgresUrl)
+// func StpPgD(pgUl string) *sql.DB {
+// 	d := cn.CPgD(pgUl)
 
-// 	return pgDb
+// 	return d
 // }

@@ -1,4 +1,4 @@
-package d
+package cn
 
 import (
 	"context"
@@ -10,8 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func MgDCn(mgDUl string) *mongo.Client {
-	client, err := mongo.NewClient(options.Client().ApplyURI(mgDUl))
+func MgDCn(mgDU string) *mongo.Client {
+	client, err := mongo.NewClient(options.Client().ApplyURI(mgDU))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,12 +36,12 @@ func MgDCn(mgDUl string) *mongo.Client {
 	return client
 }
 
-// func PostgresDatabaseConnection(pgUrl string) *sql.DB {
-// 	pgBb, err := sql.Open("postgres", pgUrl)
+// func PgDCn(pgU string) *sql.DB {
+// 	d, err := sql.Open("postgres", pgU)
 
 // 	if err != nil {
 // 		log.Fatal(err)
 // 	}
 
-// 	return pgBb
+// 	return d
 // }

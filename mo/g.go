@@ -13,11 +13,12 @@ type GC string
 type G struct {
 	Id              primitive.ObjectID
 	Sender          primitive.ObjectID
-	Recipient       primitive.ObjectID
+	Receiver        primitive.ObjectID
 	GiftType        GE
 	Category        GC
 	QRcode          string
 	Use             bool
+	Confirm         bool
 	latitude        decimal.Decimal
 	longitude       decimal.Decimal
 	ReservationTime time.Time

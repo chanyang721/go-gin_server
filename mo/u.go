@@ -15,11 +15,11 @@ const (
 )
 
 type U struct {
-	Id        primitive.ObjectID
-	PassId    string
-	Email     string
-	UserType  UE
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	Id        primitive.ObjectID `json:"id"`
+	PassId    string             `json:"passId"`
+	Email     string             `json:"email"`
+	UserType  UE                 `json:"userType"`
+	CreatedAt time.Time          `json:"createdAt"`
+	UpdatedAt time.Time          `json:"UpdatedAt"`
+	DeletedAt time.Time          `json:"deletedAt"`
 }

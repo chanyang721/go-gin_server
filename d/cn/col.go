@@ -1,4 +1,4 @@
-package d
+package cn
 
 import (
 	"ts-s/p/e"
@@ -11,8 +11,8 @@ func CMgD(c *mongo.Client) *mongo.Database {
 	return d
 }
 
-// func CreatePostgresDatabase(pgUrl string) *sql.DB {
-// 	d := PostgresDatabaseConnection(pgUrl)
+// func CPgD(pgU string) *sql.DB {
+// 	d := PgDCn(pgU)
 
 // 	return d
 // }
