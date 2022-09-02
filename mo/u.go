@@ -19,8 +19,9 @@ type U struct {
 	PassId    string             `json:"passId"`
 	Name      string             `json:"name"`
 	Email     string             `json:"email"`
+	EmailAuth bool               `json:"emailAuth"`
 	UserType  UE                 `json:"userType"`
 	CreatedAt time.Time          `json:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt"`
-	IsDeleted bool               `json:"IsDeleted"`
+	IsDeleted bool               `json:"isDeleted"`
 }

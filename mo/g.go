@@ -15,6 +15,7 @@ type G struct {
 	Sender          primitive.ObjectID `json:"sender"`
 	Receiver        primitive.ObjectID `json:"receiver"`
 	EventId         primitive.ObjectID `json:"eventId"`
+	GoodsId         primitive.ObjectID `json:"goodsId"`
 	GiftType        GE                 `json:"giftType"`
 	Category        GC                 `json:"category"`
 	QrCode          string             `json:"qrCode"`
@@ -25,5 +26,5 @@ type G struct {
 	ReservationTime time.Time          `json:"reservationTime"`
 	CreatedAt       time.Time          `json:"createdAt"`
 	UpdatedAt       time.Time          `json:"updatedAt"`
-	IsDeleted       bool               `json:"IsDeleted"`
+	IsDeleted       bool               `json:"isDeleted"`
 }

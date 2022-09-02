@@ -2,6 +2,7 @@ package r
 
 import (
 	"net/http"
+	"time"
 	"ts-s/mo"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,11 @@ func GsR(a *gin.Engine) {
 		id := c.Params.ByName("id")
 		Id, _ := primitive.ObjectIDFromHex(id)
 
+		loc, err := time.LoadLocation("Asia/Seoul")
+		if err != nil {
+			panic(err)
+		}
+
 		// i := mo.G{}
 		// c.ShouldBindJSON(&i)
 
@@ -28,6 +34,8 @@ func GsR(a *gin.Engine) {
 			GoodsType: "TICKET",
 			Category:  "카테고리",
 			Quantity:  123,
+			CreatedAt: time.Now().In(loc),
+			UpdatedAt: time.Now().In(loc),
 		}
 
 		c.JSON(http.StatusOK, gin.H{
@@ -37,26 +45,37 @@ func GsR(a *gin.Engine) {
 	})
 
 	//TODO: 플랫폼 상점의 상품 리스트 조회
-	gsr.GET("/list", func(c *gin.Context) {
+	gsr.GET("/list/:storeId", func(c *gin.Context) {
+		sId := c.Params.ByName("storeId")
+		SId, _ := primitive.ObjectIDFromHex(sId)
+
+		loc, err := time.LoadLocation("Asia/Seoul")
+		if err != nil {
+			panic(err)
+		}
 
 		gs1 := mo.Gs{
 			Id:        primitive.NewObjectID(),
-			StoreId:   primitive.NewObjectID(),
+			StoreId:   SId,
 			Name:      "상품 이름",
 			Price:     "10000",
 			GoodsType: "TICKET",
 			Category:  "카테고리",
 			Quantity:  123,
+			CreatedAt: time.Now().In(loc),
+			UpdatedAt: time.Now().In(loc),
 		}
 
 		gs2 := mo.Gs{
 			Id:        primitive.NewObjectID(),
-			StoreId:   primitive.NewObjectID(),
+			StoreId:   SId,
 			Name:      "상품 이름",
 			Price:     "10000",
 			GoodsType: "TICKET",
 			Category:  "카테고리",
 			Quantity:  123,
+			CreatedAt: time.Now().In(loc),
+			UpdatedAt: time.Now().In(loc),
 		}
 
 		gsl := []mo.Gs{gs1, gs2}

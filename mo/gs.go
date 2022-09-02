@@ -22,10 +22,11 @@ type Gs struct {
 	StoreId   primitive.ObjectID `json:"storeId"`
 	Name      string             `json:"name"`
 	Price     string             `json:"price"`
+	Photos    string             `json:"photos"`
 	GoodsType GSE                `json:"goodsType"` // 상품 유형
 	Category  GSC                `json:"category"`  // 상품 카테고리
 	Quantity  int                `json:"quantity"`
 	CreatedAt time.Time          `json:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt"`
-	IsDeleted bool               `json:"IsDeleted"`
+	IsDeleted bool               `json:"isDeleted"`
 }

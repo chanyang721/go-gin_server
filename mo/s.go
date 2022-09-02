@@ -19,20 +19,19 @@ const (
 const ()
 
 type S struct {
-	Id             primitive.ObjectID `json:"id"`
-	UserId         primitive.ObjectID `json:"userId"`
-	Name           string             `json:"name"`
-	Phone          string             `json:"phone"`
-	StoreType      SE                 `json:"storeType"`
-	Category       SC                 `json:"category"`
-	PlatformType   PE                 `json:"platformType"`
-	ShopName       string             `json:"shopName"`
-	ShopAddress    string             `json:"shopAddress"`
-	BusinessNumber string             `json:"businessNumber"`
-	Latitude       decimal.Decimal    `json:"latitude"`
-	Longitude      decimal.Decimal    `json:"longitude"`
-	Radius         int                `json:"radius"`
-	CreatedAt      time.Time          `json:"createdAt"`
-	UpdatedAt      time.Time          `json:"updatedAt"`
-	IsDeleted      bool               `json:"IsDeleted"`
+	Id            primitive.ObjectID `json:"id"`
+	Name          string             `json:"name"`
+	Phone         string             `json:"phone"`
+	StoreType     SE                 `json:"storeType"`
+	Category      SC                 `json:"category"`
+	PlatformType  PE                 `json:"platformType"`
+	ShopName      string             `json:"shopName"`
+	ShopAddress   string             `json:"shopAddress"`
+	CompanyNumber string             `json:"companyNumber"`
+	Latitude      decimal.Decimal    `json:"latitude"`
+	Longitude     decimal.Decimal    `json:"longitude"`
+	Radius        int                `json:"radius"`
+	CreatedAt     time.Time          `json:"createdAt"`
+	UpdatedAt     time.Time          `json:"updatedAt"`
+	IsDeleted     bool               `json:"isDeleted"`
 }

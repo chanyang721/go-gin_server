@@ -10,7 +10,7 @@ func AR(a *gin.Engine) {
 	ar := a.Group("/auth")
 
 	// TODO: 회원가입
-	ar.GET("/", func(c *gin.Context) {
+	ar.POST("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "성공",
 		})

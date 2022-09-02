@@ -37,6 +37,8 @@ func GR(a *gin.Engine) {
 				Id:        Id,
 				Sender:    primitive.NewObjectID(),
 				Receiver:  u.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -86,6 +88,8 @@ func GR(a *gin.Engine) {
 				Id:        g1Id,
 				Sender:    su1.Id,
 				Receiver:  ru.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "REAL",
@@ -99,6 +103,8 @@ func GR(a *gin.Engine) {
 				Id:        primitive.NewObjectID(),
 				Sender:    su2.Id,
 				Receiver:  ru.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "TICKET",
@@ -112,6 +118,8 @@ func GR(a *gin.Engine) {
 				Id:        primitive.NewObjectID(),
 				Sender:    su2.Id,
 				Receiver:  ru.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
@@ -149,7 +157,7 @@ func GR(a *gin.Engine) {
 		})
 
 		//? TODO: 좌표 주변의 선물 리스트 조회
-		gr.GET("/list/from/:x/:y", func(c *gin.Context) {
+		gr.GET("/list/from/:lat/:lng", func(c *gin.Context) {
 			// 1. 좌표값 params
 			// 2. 좌표값 반경 Nm에 포함되는 선물 리스트 리턴
 			//! 좌표, 상품 정보 유효성 검사 진행
@@ -161,8 +169,8 @@ func GR(a *gin.Engine) {
 			}
 
 			//! 1. 좌표값은 params로 받음
-			x := c.Params.ByName("x")
-			y := c.Params.ByName("y")
+			lat := c.Params.ByName("lat")
+			lng := c.Params.ByName("lng")
 
 			//! 2. 상품 정보는 body로 받음
 			// i := mo.G{}
@@ -172,8 +180,8 @@ func GR(a *gin.Engine) {
 			// 플러터 좌표 데이터 타입 https://developers.kakao.com/docs/latest/ko/kakaonavi/flutter
 			// 레포에서 생성된 좌표가 포함된 선물 정보
 			// lat, _ := decimal.NewFromString("37.5194529")
-			lat, _ := decimal.NewFromString(x)
-			lng, _ := decimal.NewFromString(y)
+			Lat, _ := decimal.NewFromString(lat)
+			Lng, _ := decimal.NewFromString(lng)
 
 			su1 := mo.U{
 				Id:        primitive.NewObjectID(),
@@ -186,35 +194,32 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("PARTNER"),
 			}
 
-			ru := mo.U{
-				Id:       primitive.NewObjectID(),
-				UserType: mo.UE("NORMAL"),
-			}
-
 			g1 := mo.G{
 				Id:        primitive.NewObjectID(),
 				Sender:    su1.Id,
-				Receiver:  ru.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
 				Category:  "선물카테고리1",
 				QrCode:    "QR코드",
-				Latitude:  lat,
-				Longitude: lng,
+				Latitude:  Lat,
+				Longitude: Lng,
 			}
 
 			g2 := mo.G{
 				Id:        primitive.NewObjectID(),
 				Sender:    su2.Id,
-				Receiver:  ru.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
 				Category:  "선물카테고리2",
 				QrCode:    "QR코드",
-				Latitude:  lat,
-				Longitude: lng,
+				Latitude:  Lat,
+				Longitude: Lng,
 			}
 
 			gb := []mo.G{g1, g2}
@@ -225,32 +230,55 @@ func GR(a *gin.Engine) {
 
 		})
 
-		//? TODO: 직접 전달 선물 생성
-		gr.POST("/direct/:to", func(c *gin.Context) {
-			su := mo.U{
-				Id:       primitive.NewObjectID(),
-				Name:     "이찬양",
-				UserType: mo.UE("NORMAL"),
-			}
+		//? TODO: 직접 전달 선물 카톡 메시지 보내기
+		gr.GET("/:id/send/:to", func(c *gin.Context) {
+			// su := mo.U{
+			// 	Id:       primitive.NewObjectID(),
+			// 	Name:     "이찬양",
+			// 	UserType: mo.UE("NORMAL"),
+			// }
 			//TODO: 인풋 상품 정보 스키마 생성
 
 			//! 1. params to는 수령자의 Id
-			id := c.Params.ByName("to")
-			Id, _ := primitive.ObjectIDFromHex(id)
-
-			//! 2. 상품 정보는 body에 있음
-			// i := mo.G{}
-			// c.ShouldBindJSON(&i)
-
-			//! 4. to가 회원이면 Receiver에 할당 후 선물 생성
-
-			//! 5. to가 비회원이면 Receiver 없이 선물 생성
+			// phone := c.Params.ByName("to")
+			// Phone, _ := primitive.ObjectIDFromHex(phone)
+			// ? to에서 사용자 정보(전화번호)를 입력
+			// ? 카톡 메시지에는 선물 정보가 포함
+			//TODO: 사용자에게 카카오톡 메시지 보내기
 
 			// 과정 후 생성된 선물 데이터
-			i := mo.G{
+
+			c.JSON(http.StatusOK, gin.H{
+				"message": "카카오톡 메시지 전송 완료",
+			})
+
+		})
+
+		//? TODO: 받은 선물 수령
+		gr.PATCH("/receive", func(c *gin.Context) {
+			// 선물 정보, 선물을 받기 위해 들어온 사용자
+			su := mo.U{
+				Id:       primitive.NewObjectID(),
+				Name:     "선물 준 사람",
+				UserType: mo.UE("NORMAL"),
+			}
+
+			// ru := mo.U{
+			// 	Id:       primitive.NewObjectID(),
+			// 	Name:     "선물 받은 사람",
+			// 	UserType: mo.UE("NORMAL"),
+			// }
+
+			i := mo.G{}
+			c.ShouldBind(&i)
+
+			// 1. i.Id 으로 => 선물 조회
+			// 2. 선물 받는 사람을 로그인한 사용자로 수정
+			g := mo.G{
 				Id:       primitive.NewObjectID(),
 				Sender:   su.Id,
-				Receiver: Id,
+				EventId:  primitive.NewObjectID(),
+				GoodsId:  primitive.NewObjectID(),
 				Use:      false,
 				Confirm:  false,
 				GiftType: "REAL",
@@ -259,14 +287,12 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item":   i,
-				"sender": su,
+				"item": g,
 			})
-
 		})
 
-		//? TODO: 좌표 전달 선물 생성
-		gr.POST("/indirect/:x/:y", func(c *gin.Context) {
+		//? TODO: 좌표 전달 선물 수정
+		gr.PATCH("/drop/:lat/:lng", func(c *gin.Context) {
 			su := mo.U{
 				Id:       primitive.NewObjectID(),
 				UserType: mo.UE("NORMAL"),
@@ -275,8 +301,8 @@ func GR(a *gin.Engine) {
 			// validation
 
 			//! 1. 좌표값은 params로 받음
-			x := c.Params.ByName("x")
-			y := c.Params.ByName("y")
+			lat := c.Params.ByName("lat")
+			lng := c.Params.ByName("lng")
 
 			//! 2. 상품 정보는 body로 받음
 			// i := mo.G{}
@@ -286,21 +312,20 @@ func GR(a *gin.Engine) {
 			// 플러터 좌표 데이터 타입 https://developers.kakao.com/docs/latest/ko/kakaonavi/flutter
 			// 레포에서 생성된 좌표가 포함된 선물 정보
 			// lat, _ := decimal.NewFromString("37.5194529")
-			lat, _ := decimal.NewFromString(x)
-			lng, _ := decimal.NewFromString(y)
+			Lat, _ := decimal.NewFromString(lat)
+			Lng, _ := decimal.NewFromString(lng)
 
 			//! 4. 선물 생성
 			i := mo.G{
 				Id:        primitive.NewObjectID(),
 				Sender:    su.Id,
-				Receiver:  primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
 				Category:  "선물카테고리1",
 				QrCode:    "QR코드",
-				Latitude:  lat,
-				Longitude: lng,
+				Latitude:  Lat,
+				Longitude: Lng,
 			}
 
 			//! 5. 선물 리턴
@@ -310,62 +335,33 @@ func GR(a *gin.Engine) {
 
 		})
 
-		// FIXME: 일반 사용자가 준 선물 생성 - 삭제
+		//? TODO: 상품 결재 후 선물 생성
 		gr.POST("/", func(c *gin.Context) {
 			loc, err := time.LoadLocation("Asia/Seoul")
 			if err != nil {
 				panic(err)
 			}
+
 			// ! 1. 선물 정보 body
-			// i := mo.G{}
-			// c.ShouldBindJSON(&i)
+			i := mo.G{}
+			c.ShouldBindJSON(&i)
 
-			// !  2.
-			p := c.Params.ByName("giftId")
-			g1Id, _ := primitive.ObjectIDFromHex(p)
-
-			su1 := mo.U{
+			g := mo.G{
 				Id:        primitive.NewObjectID(),
-				UserType:  mo.UE("NORMAL"),
+				Sender:    primitive.NewObjectID(),
+				EventId:   i.EventId,
+				GoodsId:   i.GoodsId,
+				Use:       false,
+				Confirm:   false,
+				GiftType:  "REAL",
+				Category:  "선물카테고리1",
+				QrCode:    i.QrCode,
 				CreatedAt: time.Now().In(loc),
+				UpdatedAt: time.Now().In(loc),
 			}
-
-			su2 := mo.U{
-				Id:       primitive.NewObjectID(),
-				UserType: mo.UE("PARTNER"),
-			}
-
-			ru := mo.U{
-				Id:       primitive.NewObjectID(),
-				UserType: mo.UE("NORMAL"),
-			}
-
-			g1 := mo.G{
-				Id:       g1Id,
-				Sender:   su1.Id,
-				Receiver: ru.Id,
-				Use:      false,
-				Confirm:  false,
-				GiftType: "REAL",
-				Category: "선물카테고리1",
-				QrCode:   "QR코드",
-			}
-
-			g2 := mo.G{
-				Id:       primitive.NewObjectID(),
-				Sender:   su2.Id,
-				Receiver: ru.Id,
-				Use:      false,
-				Confirm:  true,
-				GiftType: "TICKET",
-				Category: "선물카테고리2",
-				QrCode:   "QR코드",
-			}
-
-			gb := []mo.G{g1, g2}
 
 			c.JSON(http.StatusOK, gin.H{
-				"giftBox": gb,
+				"item": g,
 			})
 
 		})
@@ -430,7 +426,7 @@ func GR(a *gin.Engine) {
 				Id:        i.Id,
 				Sender:    su.Id,
 				Receiver:  primitive.NewObjectID(),
-				Use:       false,
+				Use:       true,
 				Confirm:   false,
 				GiftType:  "REAL",
 				Category:  "선물카테고리1",
