@@ -17,6 +17,7 @@ const (
 type U struct {
 	Id        primitive.ObjectID `json:"id"`
 	PassId    string             `json:"passId"`
+	Name      string             `json:"name"`
 	Email     string             `json:"email"`
 	UserType  UE                 `json:"userType"`
 	CreatedAt time.Time          `json:"createdAt"`
