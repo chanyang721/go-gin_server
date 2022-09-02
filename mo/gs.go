@@ -26,6 +26,6 @@ type Gs struct {
 	Category  GSC                `json:"category"`  // 상품 카테고리
 	Quantity  int                `json:"quantity"`
 	CreatedAt time.Time          `json:"createdAt"`
-	UpdatedAt time.Time          `json:"UpdatedAt"`
-	DeletedAt time.Time          `json:"deletedAt"`
+	UpdatedAt time.Time          `json:"updatedAt"`
+	IsDeleted bool               `json:"IsDeleted"`
 }
