@@ -1,8 +1,8 @@
 package sm
 
-type ResponseSchema struct {
-	StatusCode int
-	Method     string
-	Message    string
-	Data       interface{}
+type Res struct {
+	StatusCode int         `json:"statusCode"`
+	Method     string      `json:"method"`
+	Message    string      `json:"message"`
+	Data       interface{} `json:"data"`
 }

@@ -18,13 +18,13 @@ const (
 const ()
 
 type Gs struct {
-	Id        primitive.ObjectID `json:"id"`
+	Id        primitive.ObjectID `json:"_id"`
 	StoreId   primitive.ObjectID `json:"storeId"`
 	Name      string             `json:"name"`
 	Price     string             `json:"price"`
 	Photos    string             `json:"photos"`
-	GoodsType GSE                `json:"goodsType"` // 상품 유형
-	Category  GSC                `json:"category"`  // 상품 카테고리
+	GoodsType GSE                `json:"goodsType"`
+	Category  GSC                `json:"category"`
 	Quantity  int                `json:"quantity"`
 	CreatedAt time.Time          `json:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt"`

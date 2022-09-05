@@ -78,7 +78,6 @@ func SR(a *gin.Engine) {
 			CompanyNumber: "000-00-00000",
 			Latitude:      lat,
 			Longitude:     lng,
-			Radius:        1111,
 			CreatedAt:     time.Now().In(loc),
 			UpdatedAt:     time.Now().In(loc),
 		}

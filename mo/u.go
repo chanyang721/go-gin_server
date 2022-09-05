@@ -15,10 +15,10 @@ const (
 )
 
 type U struct {
-	Id        primitive.ObjectID `json:"id"`
-	PassId    string             `json:"passId"`
-	Name      string             `json:"name"`
-	Email     string             `json:"email"`
+	Id        primitive.ObjectID `json:"_id"`
+	PassId    string             `json:"-"`
+	Name      string             `json:"name" binding:"required"`
+	Email     string             `json:"email,omitempty"`
 	EmailAuth bool               `json:"emailAuth"`
 	UserType  UE                 `json:"userType"`
 	CreatedAt time.Time          `json:"createdAt"`

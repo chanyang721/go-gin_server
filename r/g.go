@@ -15,7 +15,13 @@ func GR(a *gin.Engine) {
 	gr := a.Group("/gift")
 
 	{
-		//? TODO: 선물 조회
+		/*
+		* @description:	선물 조회
+		* @Auth:		header: Bearer Token
+		* @Params:		id: uuid  [ ex: 631171e69676913c1ad7413e ]
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.GET("/:id", func(c *gin.Context) {
 			// 1. 입력된 아이디의 선물 조회
 			// 2. 조회되면 리턴
@@ -28,17 +34,24 @@ func GR(a *gin.Engine) {
 			id := c.Params.ByName("id")
 			Id, _ := primitive.ObjectIDFromHex(id)
 
-			u := mo.U{
+			su := mo.U{
 				Id:       primitive.NewObjectID(),
 				UserType: mo.UE("NORMAL"),
 			}
 
+			ru := mo.U{
+				Id:       primitive.NewObjectID(),
+				UserType: mo.UE("NORMAL"),
+			}
+
+			gs := mo.Gs{}
+
 			g := mo.G{
 				Id:        Id,
-				Sender:    primitive.NewObjectID(),
-				Receiver:  u.Id,
+				Sender:    su,
+				Receiver:  ru,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -49,13 +62,20 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item": g,
+				"data": g,
 			})
 
 		})
 
-		//? TODO: 사용자의 선물 리스트 조회
-		//? TODO: 1. 사용자가 이벤트를 보지 않은 선물 리스트 조회
+		/*
+		* @description:
+		*				1. 사용자의 선물 리스트 조회
+		*				2. 사용자가 이벤트를 보지 않은 선물 리스트 조회
+		* @Auth:		header: Bearer Token
+		* @Params:		event: bool [ ex: "0" or "1" ]
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.GET("/list/:event", func(c *gin.Context) {
 			// receiver와 사용자의 id가 같은 선물 리스트 리턴
 			e := c.Params.ByName("event")
@@ -84,12 +104,14 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("NORMAL"),
 			}
 
+			gs := mo.Gs{}
+
 			g1 := mo.G{
 				Id:        g1Id,
-				Sender:    su1.Id,
-				Receiver:  ru.Id,
+				Sender:    su1,
+				Receiver:  ru,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "REAL",
@@ -101,10 +123,10 @@ func GR(a *gin.Engine) {
 
 			g2 := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    su2.Id,
-				Receiver:  ru.Id,
+				Sender:    su2,
+				Receiver:  ru,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "TICKET",
@@ -116,10 +138,10 @@ func GR(a *gin.Engine) {
 
 			g3 := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    su2.Id,
-				Receiver:  ru.Id,
+				Sender:    su2,
+				Receiver:  ru,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
@@ -133,7 +155,7 @@ func GR(a *gin.Engine) {
 				gb := []mo.G{g1}
 
 				c.JSON(http.StatusOK, gin.H{
-					"items": gb,
+					"data": gb,
 				})
 			}
 
@@ -142,7 +164,7 @@ func GR(a *gin.Engine) {
 				gb := []mo.G{g2}
 
 				c.JSON(http.StatusOK, gin.H{
-					"items": gb,
+					"data": gb,
 				})
 			}
 
@@ -150,13 +172,21 @@ func GR(a *gin.Engine) {
 				gb := []mo.G{g1, g2, g3}
 
 				c.JSON(http.StatusOK, gin.H{
-					"items": gb,
+					"data": gb,
 				})
 			}
 
 		})
 
-		//? TODO: 좌표 주변의 선물 리스트 조회
+		/*
+		* @description:	좌표 주변의 선물 리스트 조회
+		* @Auth:		header: Bearer Token
+		* @Params:
+		* 				1. lat: decimal [ ex: 41.40338 ]  (위도)
+		* 				2. lng: decimal [ ex: 102.17403 ] (경도)
+		* @Success:		200, { data: []Gift }
+		* @Failure:
+		 */
 		gr.GET("/list/from/:lat/:lng", func(c *gin.Context) {
 			// 1. 좌표값 params
 			// 2. 좌표값 반경 Nm에 포함되는 선물 리스트 리턴
@@ -194,11 +224,13 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("PARTNER"),
 			}
 
+			gs := mo.Gs{}
+
 			g1 := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    su1.Id,
+				Sender:    su1,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -210,9 +242,9 @@ func GR(a *gin.Engine) {
 
 			g2 := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    su2.Id,
+				Sender:    su2,
 				EventId:   primitive.NewObjectID(),
-				GoodsId:   primitive.NewObjectID(),
+				Goods:     gs,
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
@@ -222,15 +254,21 @@ func GR(a *gin.Engine) {
 				Longitude: Lng,
 			}
 
-			gb := []mo.G{g1, g2}
-
 			c.JSON(http.StatusOK, gin.H{
-				"items": gb,
+				"data": []mo.G{g1, g2},
 			})
 
 		})
 
-		//? TODO: 직접 전달 선물 카톡 메시지 보내기
+		/*
+		* @description:	선물을 카톡 메시지로 직접 전달
+		* @Auth:		header: Bearer Token
+		* @Params:
+		* 				1. id: uuid  [ ex: 631171e69676913c1ad7413e ]
+		* 				2. to: phone [ ex: 010-7206-7102 ]
+		* @Success:		200, { message: string, data: nil }
+		* @Failure:
+		 */
 		gr.GET("/:id/send/:to", func(c *gin.Context) {
 			// su := mo.U{
 			// 	Id:       primitive.NewObjectID(),
@@ -250,16 +288,23 @@ func GR(a *gin.Engine) {
 
 			c.JSON(http.StatusOK, gin.H{
 				"message": "카카오톡 메시지 전송 완료",
+				"data":    nil,
 			})
 
 		})
 
-		//? TODO: 받은 선물 수령
+		/*
+		* @description:	받은 선물 수령
+		* @Auth:		header: Bearer Token
+		* @Body:		Gift
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.PATCH("/receive", func(c *gin.Context) {
 			// 선물 정보, 선물을 받기 위해 들어온 사용자
 			su := mo.U{
 				Id:       primitive.NewObjectID(),
-				Name:     "선물 준 사람",
+				Name:     "선물 준 사람 이름",
 				UserType: mo.UE("NORMAL"),
 			}
 
@@ -272,13 +317,15 @@ func GR(a *gin.Engine) {
 			i := mo.G{}
 			c.ShouldBind(&i)
 
+			gs := mo.Gs{}
+
 			// 1. i.Id 으로 => 선물 조회
 			// 2. 선물 받는 사람을 로그인한 사용자로 수정
 			g := mo.G{
 				Id:       primitive.NewObjectID(),
-				Sender:   su.Id,
+				Sender:   su,
 				EventId:  primitive.NewObjectID(),
-				GoodsId:  primitive.NewObjectID(),
+				Goods:    gs,
 				Use:      false,
 				Confirm:  false,
 				GiftType: "REAL",
@@ -287,11 +334,20 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item": g,
+				"data": g,
 			})
 		})
 
-		//? TODO: 좌표 전달 선물 수정
+		/*
+		* @description:	좌표 전달 선물 수정
+		* @Auth:		header: Bearer Token
+		* @Params:
+		* 				1. lat: decimal [ ex: 41.40338 ]  (위도)
+		* 				2. lng: decimal [ ex: 102.17403 ] (경도)
+		* @Body:		Gift
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.PATCH("/drop/:lat/:lng", func(c *gin.Context) {
 			su := mo.U{
 				Id:       primitive.NewObjectID(),
@@ -316,9 +372,9 @@ func GR(a *gin.Engine) {
 			Lng, _ := decimal.NewFromString(lng)
 
 			//! 4. 선물 생성
-			i := mo.G{
+			g := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    su.Id,
+				Sender:    su,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -330,16 +386,27 @@ func GR(a *gin.Engine) {
 
 			//! 5. 선물 리턴
 			c.JSON(http.StatusOK, gin.H{
-				"item": i,
+				"data": g,
 			})
 
 		})
 
-		//? TODO: 상품 결재 후 선물 생성
+		/*
+		* @description:	상품 결재 후 선물 생성
+		* @Auth:		header: Bearer Token
+		* @Body:		Gift
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.POST("/", func(c *gin.Context) {
 			loc, err := time.LoadLocation("Asia/Seoul")
 			if err != nil {
 				panic(err)
+			}
+
+			su := mo.U{
+				Id:       primitive.NewObjectID(),
+				UserType: mo.UE("NORMAL"),
 			}
 
 			// ! 1. 선물 정보 body
@@ -348,9 +415,9 @@ func GR(a *gin.Engine) {
 
 			g := mo.G{
 				Id:        primitive.NewObjectID(),
-				Sender:    primitive.NewObjectID(),
+				Sender:    su,
 				EventId:   i.EventId,
-				GoodsId:   i.GoodsId,
+				Goods:     i.Goods,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -361,20 +428,31 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item": g,
+				"data": g,
 			})
 
 		})
 
-		//? TODO: 선물 정보 수정
-		//? TODO: 1. 선물(실물)의 배송 정보(주소) 수정
-		//? TODO: 2. 좌표에 수령자가 결정되지 않은 있는 선물 획득
+		/*
+		* @description:
+		*		1. 선물(실물)의 배송 정보(주소) 수정
+		* 		2. 좌표에 수령자가 결정되지 않은 있는 선물 획득
+		* @Auth:		header: Bearer Token
+		* @Body:		Gift
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
 		gr.PATCH("/", func(c *gin.Context) {
 			// 1. 선물 id 조회
 			// 2. 선물 id가 없으면 에러
 			// 3. 선물이 있으면 선물 정보 수정
 			// 4. 선물 정보 리턴
 			su := mo.U{
+				Id:       primitive.NewObjectID(),
+				UserType: mo.UE("NORMAL"),
+			}
+
+			ru := mo.U{
 				Id:       primitive.NewObjectID(),
 				UserType: mo.UE("NORMAL"),
 			}
@@ -387,8 +465,8 @@ func GR(a *gin.Engine) {
 
 			g := mo.G{
 				Id:              Id,
-				Sender:          su.Id,
-				Receiver:        primitive.NewObjectID(),
+				Sender:          su,
+				Receiver:        ru,
 				Use:             i.Use,
 				Confirm:         i.Confirm,
 				GiftType:        i.GiftType,
@@ -400,15 +478,22 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item": g,
+				"data": g,
 			})
 
 		})
 
-		// TODO: 선물 소비 시, 삭제 업데이트
-		gr.PUT("/delete", func(c *gin.Context) {
+		/*
+		* @description: 선물 소비 시, use, isDeleted 업데이트
+		* @Auth:		header: Bearer Token
+		* @Body:		Gift
+		* @Success:		200, { data: Gift }
+		* @Failure:
+		 */
+		// TODO:
+		gr.PATCH("/used/:id", func(c *gin.Context) {
 			// 1. 선물을 사용 완료 요청
-			// 2. deletedAt: 업데이트
+			// 2. use, isDeleted: 업데이트
 			loc, err := time.LoadLocation("Asia/Seoul")
 			if err != nil {
 				panic(err)
@@ -418,14 +503,18 @@ func GR(a *gin.Engine) {
 				Id:       primitive.NewObjectID(),
 				UserType: mo.UE("NORMAL"),
 			}
+			ru := mo.U{
+				Id:       primitive.NewObjectID(),
+				UserType: mo.UE("NORMAL"),
+			}
 
 			i := mo.G{}
 			c.ShouldBindJSON(&i)
 
 			g := mo.G{
 				Id:        i.Id,
-				Sender:    su.Id,
-				Receiver:  primitive.NewObjectID(),
+				Sender:    su,
+				Receiver:  ru,
 				Use:       true,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -437,7 +526,7 @@ func GR(a *gin.Engine) {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"item": g,
+				"data": g,
 			})
 
 		})

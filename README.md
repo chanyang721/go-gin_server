@@ -1,34 +1,34 @@
 ### ToSpace - PreSend Server
 
 #### 이름
-cf = configuration </b>
-    md    = mode </b>
-d  = database </b>
-    cn    = connection </b>
-    stp   = setup</b>
-hd = handler</b>
-hp = helper</b>
-m  = middleware</b>
-    - df  = default</b>
-mo = model</b>
-p  = package</b>
-    - e   = environment</b>
-r  = router</b>
-s  = service</b>
-sm = schema</b>
-    - e   = error</b>
-    - rsp = response</b>
-t  = test</b>
-    - td = test_database</b>
-        - sd = seed</b>
+cf = configuration </br>
+    md    = mode </br>
+d  = database </br>
+    cn    = connection </br>
+    stp   = setup</br>
+hd = handler</br>
+hp = helper</br>
+m  = middleware</br>
+    - df  = default</br>
+mo = model</br>
+p  = package</br>
+    - e   = environment</br>
+r  = router</br>
+s  = service</br>
+sm = schema</br>
+    - e   = error</br>
+    - rsp = response</br>
+t  = test</br>
+    - td = test_database</br>
+        - sd = seed</br>
 
 #### 파일 이름
-i  = index</b>
-u  = user</b>
-s  = store</b>
-g  = gift</b>
-gs = goods</b>
-a  = authorization</b>
+i  = index</br>
+u  = user</br>
+s  = store</br>
+g  = gift</br>
+gs = goods</br>
+a  = authorization</br>
 
 
 

@@ -6,11 +6,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func StpMgD(mgDUl string) *mongo.Database {
+func StpMgD(mgDUl string) *mongo.Client {
 	c := cn.MgDCn(mgDUl)
-	d := cn.CMgD(c)
+	// d := cn.CMgD(c, ctx)
 
-	return d
+	return c
 }
 
 // func StpPgD(pgUl string) *sql.DB {
