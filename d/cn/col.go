@@ -1,20 +1,12 @@
 package cn
 
-// func CMgD(c *mongo.Client, ctx context.Context) *mongo.Database {
-// 	d := c.Database(e.G("Mongo_DB_Name"))
-// 	u := d.Collection("users")
-// 	d.Collection("stores")
-// 	d.Collection("gifts")
-// 	d.Collection("goods")
+import (
+	"ts-s/p/e"
 
-// 	result, _ := u.InsertOne(ctx, bson.D{})
-// 	fmt.Printf("Inserted document with _id: %v\n", result.InsertedID)
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
-// 	return d
-// }
-
-// func CPgD(pgU string) *sql.DB {
-// 	d := PgDCn(pgU)
-
-// 	return d
-// }
+func CMgD(c *mongo.Client) *mongo.Database {
+	d := c.Database(e.G("Mongo_DB_Name"))
+	return d
+}

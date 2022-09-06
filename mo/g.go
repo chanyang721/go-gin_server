@@ -12,8 +12,8 @@ type GC string
 
 type G struct {
 	Id              primitive.ObjectID `json:"_id"`
-	Sender          U                  `json:"sender"`
-	Receiver        U                  `json:"receiver,omitempty"`
+	Sender          primitive.ObjectID `json:"sender"`
+	Receiver        primitive.ObjectID `json:"receiver,omitempty"`
 	EventId         primitive.ObjectID `json:"eventId"`
 	Goods           Gs                 `json:"goods"`
 	GiftType        GE                 `json:"giftType"`

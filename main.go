@@ -17,8 +17,6 @@ func main() {
 
 	d.StpMgD(e.G("MONGO_DB_URL"))
 
-	// d.StpPgD(e.G("POSTGRESQL_DB_URL"))
-
 	m.StpM(a)
 
 	r.StpR(a)

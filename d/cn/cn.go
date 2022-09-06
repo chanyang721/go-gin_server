@@ -2,11 +2,8 @@ package cn
 
 import (
 	"context"
-	"fmt"
 	"time"
-	"ts-s/p/e"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -32,14 +29,11 @@ func MgDCn(mgDU string) *mongo.Client {
 
 	println("Successfully connected and pinged")
 
-	d := client.Database(e.G("Mongo_DB_Name"))
-	u := d.Collection("users")
-	d.Collection("stores")
-	d.Collection("gifts")
-	d.Collection("goods")
+	// d := client.Database(e.G("Mongo_DB_Name"))
+	// u := d.Collection("users")
 
-	result, _ := u.InsertOne(ctx, bson.D{})
-	fmt.Printf("Inserted document with _id: %v\n", result.InsertedID)
+	// result, _ := u.InsertOne(ctx, bson.D{})
+	// fmt.Printf("Inserted document with _id: %v\n", result.InsertedID)
 
 	return client
 }
