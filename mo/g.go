@@ -15,7 +15,7 @@ type G struct {
 	Sender          primitive.ObjectID `json:"sender"`
 	Receiver        primitive.ObjectID `json:"receiver,omitempty"`
 	EventId         primitive.ObjectID `json:"eventId"`
-	Goods           Gs                 `json:"goods"`
+	GoodsId         primitive.ObjectID `json:"goodsId"`
 	GiftType        GE                 `json:"giftType"`
 	Category        GC                 `json:"category"`
 	QrCode          string             `json:"qrCode,omitempty"`

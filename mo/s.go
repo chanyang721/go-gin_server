@@ -12,18 +12,23 @@ type SC string // 상점 카테고리
 type PE string // 플랫폼 유형
 
 const (
-	PLATFORM SE = "PLATFORM"
-	TOSPACE  SE = "TOSPACE"
+	ADMINSTORE   SE = "ADMIN"
+	VENDORSTORE  SE = "VENDOR"
+	PARTNERSTORE SE = "PARTNER"
 )
 
+// 상점 카테고리
+const ()
+
+// 플랫폼 유형
 const ()
 
 type S struct {
 	Id            primitive.ObjectID `json:"_id"`
 	Name          string             `json:"name" binding:"required"`
 	Phone         string             `json:"phone" binding:"required"`
-	StoreType     SE                 `json:"storeType,omitempty" binding:"required"`
-	Category      SC                 `json:"category,omitempty" binding:"required"`
+	StoreType     SE                 `json:"storeType" binding:"required"`
+	Category      SC                 `json:"category" binding:"required"`
 	PlatformType  PE                 `json:"platformType,omitempty"`
 	ShopName      string             `json:"shopName" binding:"required"`
 	ShopAddress   string             `json:"shopAddress" binding:"required"`

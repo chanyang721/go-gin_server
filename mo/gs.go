@@ -22,10 +22,10 @@ type Gs struct {
 	StoreId   primitive.ObjectID `json:"storeId"`
 	Name      string             `json:"name"`
 	Price     string             `json:"price"`
-	Photos    string             `json:"photos"`
 	GoodsType GSE                `json:"goodsType"`
 	Category  GSC                `json:"category"`
 	Quantity  int                `json:"quantity"`
+	Photos    []Photos           `json:"photos"`
 	CreatedAt time.Time          `json:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt"`
 	IsDeleted bool               `json:"isDeleted"`

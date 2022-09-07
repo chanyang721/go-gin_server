@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ts-s/cf/md"
+	"ts-s/cfg/md"
 	"ts-s/d"
 	"ts-s/m"
 	"ts-s/p/e"

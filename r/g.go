@@ -44,14 +44,12 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("NORMAL"),
 			}
 
-			gs := mo.Gs{}
-
 			g := mo.G{
 				Id:        Id,
 				Sender:    su.Id,
 				Receiver:  ru.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -104,14 +102,12 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("NORMAL"),
 			}
 
-			gs := mo.Gs{}
-
 			g1 := mo.G{
 				Id:        g1Id,
 				Sender:    su1.Id,
 				Receiver:  ru.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "REAL",
@@ -126,7 +122,7 @@ func GR(a *gin.Engine) {
 				Sender:    su2.Id,
 				Receiver:  ru.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "TICKET",
@@ -141,7 +137,7 @@ func GR(a *gin.Engine) {
 				Sender:    su2.Id,
 				Receiver:  ru.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
@@ -224,13 +220,11 @@ func GR(a *gin.Engine) {
 				UserType: mo.UE("PARTNER"),
 			}
 
-			gs := mo.Gs{}
-
 			g1 := mo.G{
 				Id:        primitive.NewObjectID(),
 				Sender:    su1.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -244,7 +238,7 @@ func GR(a *gin.Engine) {
 				Id:        primitive.NewObjectID(),
 				Sender:    su2.Id,
 				EventId:   primitive.NewObjectID(),
-				Goods:     gs,
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   true,
 				GiftType:  "TICKET",
@@ -317,15 +311,13 @@ func GR(a *gin.Engine) {
 			i := mo.G{}
 			c.ShouldBind(&i)
 
-			gs := mo.Gs{}
-
 			// 1. i.Id 으로 => 선물 조회
 			// 2. 선물 받는 사람을 로그인한 사용자로 수정
 			g := mo.G{
 				Id:       primitive.NewObjectID(),
 				Sender:   su.Id,
 				EventId:  primitive.NewObjectID(),
-				Goods:    gs,
+				GoodsId:  primitive.NewObjectID(),
 				Use:      false,
 				Confirm:  false,
 				GiftType: "REAL",
@@ -375,6 +367,8 @@ func GR(a *gin.Engine) {
 			g := mo.G{
 				Id:        primitive.NewObjectID(),
 				Sender:    su.Id,
+				EventId:   primitive.NewObjectID(),
+				GoodsId:   primitive.NewObjectID(),
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -417,7 +411,7 @@ func GR(a *gin.Engine) {
 				Id:        primitive.NewObjectID(),
 				Sender:    su.Id,
 				EventId:   i.EventId,
-				Goods:     i.Goods,
+				GoodsId:   i.GoodsId,
 				Use:       false,
 				Confirm:   false,
 				GiftType:  "REAL",
@@ -522,7 +516,7 @@ func GR(a *gin.Engine) {
 				QrCode:    "QR코드",
 				CreatedAt: time.Now().In(loc),
 				UpdatedAt: time.Now().In(loc),
-				IsDeleted: true,
+				IsDeleted: false,
 			}
 
 			c.JSON(http.StatusOK, gin.H{
