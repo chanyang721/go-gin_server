@@ -6,9 +6,6 @@ import (
 
 func StpR(a *gin.Engine) {
 	UR(a)
-	GR(a)
-	GsR(a)
-	SR(a)
 }
 
 // TODO: Request 객체 구조체 생성

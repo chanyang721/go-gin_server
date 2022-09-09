@@ -21,6 +21,5 @@ func main() {
 
 	r.StpR(a)
 
-	println("Server is running on http://localhost:4000")
 	a.Run(":" + e.G("GO_PORT"))
 }

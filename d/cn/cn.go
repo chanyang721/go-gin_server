@@ -29,11 +29,5 @@ func MgDCn(mgDU string) *mongo.Client {
 
 	println("Successfully connected and pinged")
 
-	// d := client.Database(e.G("Mongo_DB_Name"))
-	// u := d.Collection("users")
-
-	// result, _ := u.InsertOne(ctx, bson.D{})
-	// fmt.Printf("Inserted document with _id: %v\n", result.InsertedID)
-
 	return client
 }
